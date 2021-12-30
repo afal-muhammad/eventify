@@ -127,3 +127,12 @@ dmypy.json
 
 # Pyre type checker
 .pyre/
+
+static/*
+.vscode/
+# python byte code files
+*.pyc
+inventory/local.py
+
+.idea/*
+*.idea

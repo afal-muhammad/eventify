@@ -1,0 +1,45 @@
+{% load static %}
+<html>
+	<head>
+<!--		<title>R&D Inventory</title>-->
+
+		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+		<script type="text/javascript" src="{% static 'jquery-3.3.1.min.js' %}"></script>
+		<script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
+<!--		<link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}"/>-->
+		<script type="text/javascript" charset="utf8" src="{% static 'js/bootstrap.min.js' %}"></script>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
+		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
+		<script>
+		$(document).ready(function(){
+    			$('#load').fadeOut();
+			})
+		function FadeinLoad(){
+			$("#load").fadeIn();
+		}
+		</script>
+
+	</head>
+	<body>
+<!--	<body background="{% static 'images/electrical.jpg' %}" style="background-size:cover;" >-->
+<div id="load"></div>
+				{% if request.user.is_authenticated %}
+				<div class="nav_bar">
+					<a class="menu" href="/"><i class="fa fa-home"></i><span class="size">Inventory</span></a>
+					<a class="fl-left" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>LOGOUT</a>
+					<div>
+						  <span class="dot fl-left p-r ">{{request.user.first_name}}{{request.user.last_name}}</span>
+					</div>
+					<h1 class="header_text">R & D Inventory Managment</h1>
+
+				</div>
+						{% endif %}
+
+
+
+
+	{% block content%}
+	{% endblock %}
+
+	</body>
+</html>

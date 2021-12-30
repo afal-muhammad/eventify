@@ -1,0 +1,62 @@
+{% extends 'base.html' %}
+{% load static %}
+{% block content %}
+  <link rel="stylesheet" href="{% static 'css/accounts.css' %}">
+<div class="wrapper fadeInDown">
+  <div id="formContent">
+      <!-- Login Form -->
+    <form id="signup_form">
+        {% csrf_token %}
+        <input type="text" id="first_name" class="fadeIn second" name="first_name" placeholder="First Name">
+        <input type="text" id="last_name" class="fadeIn second" name="last_name" placeholder="Last Name">
+        <input type="text" id="email" class="fadeIn second" name="uid" placeholder="Employee Id">
+        <input type="password" id="password" class="fadeIn third" name="password" placeholder="password">
+        <input type="submit" class="fadeIn fourth" value="Sign Up">
+        <div class="error1"></div>
+    </form>
+
+    <!-- Remind Passowrd -->
+    <div id="formFooter">
+      Already a User?<a class="" href="{% url 'login' %}">Login</a>
+    </div>
+
+  </div>
+</div>
+
+<script>
+
+
+   $("#signup_form").submit(function(e) {
+       e.preventDefault();
+       var formData = new FormData(this);
+       $.ajax({
+       url : "{% url 'signup' %}",
+       type : "POST",
+       data : formData,
+       dataType:'json',
+       contentType: false,
+       processData: false,
+           success : function(data) {
+           console.log(data);
+               if (data.result != "success")
+                {
+                 response = data.result;
+                 $('.error1').html(response);
+               }
+               else{
+               window.location.href = '{% url 'login' %}';
+                   }
+
+            },
+           // handle a non-successful response
+           error : function(xhr,errmsg,errors) {
+           console.log(xhr.status + ": " + xhr.responseText);
+           console.log(errors)// provide a bit more info about the error to the console
+           }
+       });
+   });
+
+</script>
+
+{% endblock %}
+
