@@ -44,7 +44,6 @@ INSTALLED_APPS = [
     'whitenoise.runserver_nostatic',
     'applications.accounts.apps.AccountsConfig',
     'applications.events.apps.EventsConfig',
-
 ]
 
 MIDDLEWARE = [
