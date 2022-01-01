@@ -9,6 +9,8 @@ https://docs.djangoproject.com/en/3.2/topics/settings/
 For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
+import dj_database_url
+
 import os
 import django_heroku
 from pathlib import Path
@@ -74,7 +76,14 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'evently.wsgi.application'
 
-
+DATABASES = {
+    'default': {
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
+    }
+}
+db_from_env = dj_database_url.config()
+DATABASES['default'].update(db_from_env)
 
 
 
