@@ -1,45 +1,140 @@
 {% load static %}
-<html>
-	<head>
-<!--		<title>R&D Inventory</title>-->
+<html lang="en">
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
+    <meta name="description" content="#">
+    <meta name="keywords" content="#">
+    <script src="{% static 'js/jquery-3.2.1.min.js' %}"></script>
+    <script src="{% static 'js/cloudflare.js' %}"></script>
+    <link rel="shortcut icon" href="#">
+    <title>Evently</title>
+    <link rel="stylesheet" href="{% static 'css/bootstrap.min.css' %}">
 
-		<link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
-		<script type="text/javascript" src="{% static 'jquery-3.3.1.min.js' %}"></script>
-		<script type="text/javascript" charset="utf8" src="{% static 'DataTables/datatables.js' %}"></script>
-<!--		<link rel="stylesheet" type="text/css" href="{% static 'DataTables/datatables.css' %}"/>-->
-		<script type="text/javascript" charset="utf8" src="{% static 'js/bootstrap.min.js' %}"></script>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/bootstrap.min.css' %}"/>
-		<link rel="stylesheet" type="text/css" href="{% static 'css/main.css' %}"/>
-		<script>
-		$(document).ready(function(){
-    			$('#load').fadeOut();
-			})
-		function FadeinLoad(){
-			$("#load").fadeIn();
-		}
-		</script>
+    <link href="https://fonts.googleapis.com/css?family=Roboto:300,400,500,700,900" rel="stylesheet">
 
-	</head>
-	<body>
-<!--	<body background="{% static 'images/electrical.jpg' %}" style="background-size:cover;" >-->
-<div id="load"></div>
-				{% if request.user.is_authenticated %}
-				<div class="nav_bar">
-					<a class="menu" href="/"><i class="fa fa-home"></i><span class="size">Inventory</span></a>
-					<a class="fl-left" href="{% url 'logout' %}"><i class="fa fa-sign-out"></i>LOGOUT</a>
-					<div>
-						  <span class="dot fl-left p-r ">{{request.user.first_name}}{{request.user.last_name}}</span>
-					</div>
-					<h1 class="header_text">R & D Inventory Managment</h1>
+    <link rel="stylesheet" href="{%static 'css/themify-icons.css' %}">
 
-				</div>
-						{% endif %}
+    <link rel="stylesheet" href="{% static 'css/font-awesome.min.css' %}">
+
+    <link href="{% static 'css/set1.css' %}" rel="stylesheet">
+
+    <link rel="stylesheet" href="{% static 'css/style.css' %}">
+</head>
+<body>
+
+<div class="nav-menu sticky-top">
+    <div class="bg transition">
+        <div class="container-fluid fixed">
+            <div class="row">
+                <div class="col-md-12">
+                    <nav class="navbar navbar-expand-lg">
+                        <a class="navbar-brand" href="index.html"><img src="{% static 'images/logo.png' %}" alt="logo"></a>
+                        <button class="navbar-toggler" type="button" data-toggle="collapse"
+                                data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
+                                aria-label="Toggle navigation">
+                            <span class="ti-menu"></span>
+                        </button>
+                        <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
+                            <ul class="navbar-nav">
+                                <li class="nav-item">
+                                    <a class="nav-link" href="listing.html">Explore</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Pages
+                                        <span class="ti-angle-down"></span>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="index-two.html">Home Style Two</a>
+                                        <a class="dropdown-item" href="listing.html">Listing</a>
+                                        <a class="dropdown-item" href="detail.html">Listing Detail</a>
+                                        <a class="dropdown-item" href="add-listing.html">Add new Listing</a>
+                                        <a class="dropdown-item" href="payment-method.html">Payment Method</a>
+                                        <a class="dropdown-item" href="thank-you.html">Thank You</a>
+                                        <a class="dropdown-item" href="contact.html">Contact</a>
+                                        <a class="dropdown-item" href="pricing.html">Pricing</a>
+                                        <a class="dropdown-item" href="404.html">404</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item active">
+                                    <a class="nav-link" href="contact.html">Help</a>
+                                </li>
+                                <li class="nav-item dropdown">
+                                    <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
+                                       aria-expanded="false">
+                                        Blog
+                                        <span class="ti-angle-down"></span>
+                                    </a>
+                                    <div class="dropdown-menu">
+                                        <a class="dropdown-item" href="blog.html">Blog Listing</a>
+                                        <a class="dropdown-item" href="blog-two.html">Blog Layout Two</a>
+                                        <a class="dropdown-item" href="blog-detail.html">Blog Detail</a>
+                                    </div>
+                                </li>
+                                <li class="nav-item">
+                                    {% if request.user.is_authenticated %}
+                                    <a class="nav-link" href="{% url 'logout' %}">Logout</a>
+                                    {% else %}
+                                    <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                    {% endif %}
+                                </li>
+                                {% if request.user.is_authenticated %}
+                                <li><a href="add-listing.html" class="btn btn-outline-danger top-btn"><span
+                                        class="ti-plus"></span> Add Listing</a></li>
+                                {% endif %}
+                            </ul>
+                        </div>
+                    </nav>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>
+{% block content %}
+{% endblock %}
 
 
+<footer class="main-block gray">
+    <div class="container-fluid">
+        <div class="row">
+            <div class="col-md-4 responsive-wrap">
+                <div class="location">
+                    <i class="fa fa-map-marker" aria-hidden="true"></i>
+                    <p>503 Sylvan Ave, Mountain View<br> CA 94041, United States</p>
+                </div>
+            </div>
+            <div class="col-md-4 responsive-wrap">
+                <div class="footer-logo_wrap">
+                    <img src="{% static 'images/footer-logo.png' %}" alt="#" class="img-fluid">
+                </div>
+            </div>
+            <div class="col-md-4 responsive-wrap">
+                <ul class="social-icons">
+                    <li><a href="#"><i class="fa fa-twitter" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-facebook" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-instagram" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-envelope-o" aria-hidden="true"></i></a></li>
+                    <li><a href="#"><i class="fa fa-phone" aria-hidden="true"></i></a></li>
+                </ul>
+            </div>
+        </div>
+        <div class="row mt-5">
+            <div class="col-md-12">
+                <div class="copyright">
+                    <p>Copyright © 2017 Listed Inc. All rights reserved</p>
+                    <a href="#">Privacy</a>
+                    <a href="#">Terms</a>
+                </div>
+            </div>
+        </div>
+    </div>
+</footer>
 
 
-	{% block content%}
-	{% endblock %}
-
-	</body>
+<script src="{% static 'js/popper.min.js' %}"></script>
+<script src="{% static 'js/bootstrap.min.js' %}"></script>
+</body>
 </html>

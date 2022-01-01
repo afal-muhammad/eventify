@@ -44,17 +44,17 @@ class SignUpView(View):
     def get(self, request, *args, **kwargs):
         return render(self.request, 'signup.html')
 
-
     def post(self,request):
+        print(self.request.POST)
         if self.request.POST['first_name'] and self.request.POST['last_name'] and \
                 self.request.POST['password']:
             user = User()
             user.first_name = self.request.POST['first_name']
             user.last_name = self.request.POST['last_name']
-            user.email, user.username = self.request.POST['email']
+            user.email = user.username = self.request.POST['email']
             user.set_password(self.request.POST['password'])
-            usernames = list(User.objects.values_list("username", flat=True))
-            if not user.username in usernames:
+            emails = list(User.objects.values_list("email", flat=True))
+            if not user.username in emails:
                 user.save()
                 data = {}
                 data['result'] = "success"
@@ -67,7 +67,7 @@ class SignUpView(View):
                 return HttpResponse(json.dumps(data),content_type="application/json")
         else:
             data = {}
-            data['result'] = "Both fields are mandatory"
+            data['result'] = "All fields are mandatory"
             return HttpResponse(json.dumps(data),
                                 content_type="application/json")
 
@@ -78,7 +78,7 @@ class LogoutView(View):
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
         logout(self.request)
-        return redirect('/accounts/login/')
+        return redirect('/login')
 
 class LandingView(View):
     def get(self, *args, **kwargs):

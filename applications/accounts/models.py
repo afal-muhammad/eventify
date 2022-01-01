@@ -11,4 +11,4 @@ class User(AbstractUser, TimeStampModel):
     image = models.ImageField(upload_to='profile', null=True, blank=True)
 
     def __str__(self):
-        return self.first_name
+        return self.username
