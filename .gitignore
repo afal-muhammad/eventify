@@ -132,7 +132,7 @@ static/*
 .vscode/
 # python byte code files
 *.pyc
-inventory/local.py
+evently/local.py
 
 .idea/*
 *.idea
