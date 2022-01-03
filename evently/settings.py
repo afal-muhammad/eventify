@@ -76,27 +76,10 @@ TEMPLATES = [
 
 WSGI_APPLICATION = 'evently.wsgi.application'
 
+
 DATABASES = {
-
-    'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'events',
-
-        'USER': 'postgres',
-
-        'PASSWORD': 'ramshi@123',
-
-        'HOST': 'localhost',
-
-        'PORT': '5432',
-
-    }
-
+    'default': dj_database_url.config()
 }
-db_from_env = dj_database_url.config()
-DATABASES['default'].update(db_from_env)
 
 
 
