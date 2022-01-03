@@ -1,9 +1,10 @@
+import datetime
 import json
 import os
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.contrib.auth.decorators import login_required
-from django.core.validators import validate_email
+from django.db.models import Q
 from django.http import HttpResponse,JsonResponse
 from django.shortcuts import redirect
 from django.shortcuts import render
@@ -12,6 +13,7 @@ from django.utils.decorators import method_decorator
 from django.views import View
 from django.views.decorators.csrf import csrf_exempt
 from applications.accounts.models import User
+from applications.events.models import Events
 
 # Create your views here.
 class LoginView(View):
@@ -45,7 +47,6 @@ class SignUpView(View):
         return render(self.request, 'signup.html')
 
     def post(self,request):
-        print(self.request.POST)
         if self.request.POST['first_name'] and self.request.POST['last_name'] and \
                 self.request.POST['password']:
             user = User()
@@ -80,7 +81,18 @@ class LogoutView(View):
         logout(self.request)
         return redirect('/login')
 
-class LandingView(View):
-    def get(self, *args, **kwargs):
 
-        return render(self.request, 'landing.html')
+class LandingView(View):
+
+    def get(self, *args, **kwargs):
+        # events = Events.objects.filter(is_published=True, start_date__gte=datetime.datetime.now() + \
+        #                                                               datetime.timedelta(hours=1)).order_by("start_date")
+        events = Events.objects.filter(is_published=True, start_date__gt=datetime.datetime.now()).order_by('start_date')
+        return render(self.request, 'landing.html',{"events":events})
+
+
+class MyeventsView(View):
+
+    def get(self, *args, **kwargs):
+        events = Events.objects.filter(user_obj=self.request.user).order_by("start_date")
+        return render(self.request, 'event-listing.html',{"events":events})
