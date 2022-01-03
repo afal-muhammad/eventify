@@ -77,24 +77,12 @@ TEMPLATES = [
 WSGI_APPLICATION = 'evently.wsgi.application'
 
 DATABASES = {
-
     'default': {
-
-        'ENGINE': 'django.db.backends.postgresql_psycopg2',
-
-        'NAME': 'events',
-
-        'USER': 'postgres',
-
-        'PASSWORD': 'ramshi@123',
-
-        'HOST': 'localhost',
-
-        'PORT': '5432',
-
+        'ENGINE': 'django.db.backends.sqlite3',
+        'NAME': BASE_DIR / 'db.sqlite3',
     }
-
 }
+
 db_from_env = dj_database_url.config(conn_max_age=600)
 DATABASES['default'].update(db_from_env)
 
@@ -143,8 +131,8 @@ USE_TZ = True
 DEFAULT_AUTO_FIELD = 'django.db.models.BigAutoField'
 django_heroku.settings(locals())
 
-# try:
-#     from .local import *
-# except:
-#     from .main_settings import *
+try:
+    from .local_settings import *
+except:
+    from .production import *
 
