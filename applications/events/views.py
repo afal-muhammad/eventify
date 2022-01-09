@@ -1,6 +1,7 @@
 import datetime
 import json
 import stripe
+import socket
 from applications.events.models import Events
 from decimal import Decimal
 from django.conf import settings
@@ -31,7 +32,10 @@ class PublishEventView(View):
         # try:
         event = Events.objects.get(slug=kwargs["slug"])
         current_site = get_current_site(self.request)
-
+        if self.request.is_secure():
+            protocol = 'https://'
+        else:
+            protocol = 'http://'
         session = stripe.checkout.Session.create(
             line_items=[{
                 'price_data': {
@@ -44,8 +48,8 @@ class PublishEventView(View):
                 'quantity': 1,
             }],
             mode='payment',
-            success_url=str(current_site.domain) + '/success?flag=True&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
-            cancel_url=str(current_site.domain) + '/success?flag=False&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
+            success_url=protocol + current_site.domain +'/success?flag=True&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
+            cancel_url=protocol + current_site.domain + '/success?flag=False&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
 
         )
         return redirect(session.url)
