@@ -1,4 +1,5 @@
 from django.db import models
+from django.conf import settings
 from django.template.defaultfilters import slugify
 from django.utils.translation import ugettext as _
 from applications.accounts.models import User
@@ -10,7 +11,7 @@ class TimeStampModel(models.Model):
 class Events(TimeStampModel):
     title = models.CharField(_('Title'), max_length=150)
     location = models.CharField(_('Location'), max_length=150)
-    start_date = models.DateTimeField(_('Start Date'), max_length=150, null=True, blank=True)
+    start_date = models.DateTimeField(_('Start Date'), max_length=150, null=False, blank=False)
     end_date = models.DateTimeField(_('End Date'), max_length=150, null=True, blank=True)
     description = models.TextField(_('Event Description'), null=True, blank=True)
     banner = models.FileField(_('Banners'), upload_to='Event-Banners', null=True, blank=True)
@@ -20,6 +21,9 @@ class Events(TimeStampModel):
 
     def __str__(self):
         return self.title
+
+    def get_banner_image(self):
+        return self.banner.url if self.banner else settings.STATIC_URL + 'images/default_banner.jpg'
 
     class Meta:
         verbose_name = _('Events')

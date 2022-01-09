@@ -10,10 +10,11 @@ For the full list of settings and their values, see
 https://docs.djangoproject.com/en/3.2/ref/settings/
 """
 import dj_database_url
+import django_heroku
 
 import os
-import django_heroku
 from pathlib import Path
+import stripe
 
 # Build paths inside the project like this: BASE_DIR / 'subdir'.
 BASE_DIR = Path(__file__).resolve().parent.parent
@@ -140,6 +141,21 @@ STATICFILES_DIRS = [
     os.path.join(BASE_DIR, "staticfiles"),
 ]
 
+AUTHENTICATION_BACKENDS = ['django.contrib.auth.backends.ModelBackend',
+                           'applications.accounts.backends.EmailModelBackend'
+]
+
+
+stripe.api_key = 'sk_test_51KE6eZSHrbZyKrewhsvAceacWtSNzlc6rhHdHEXgK8utX8FQYIgZEl0ZFveSJemBHA4nQyt6hZwSyAEQw3CZqFs300mGfphYwY'
+
+# plans = stripe.Plan.list(limit=1)
+# plan_id = plans.data[0].id
+
+STRIPE_SECRET_KEY = 'sk_test_51KE6eZSHrbZyKrewhsvAceacWtSNzlc6rhHdHEXgK8utX8FQYIgZEl0ZFveSJemBHA4nQyt6hZwSyAEQw3CZqFs300mGfphYwY'
+STRIPE_PUBLISHABLE_KEY = 'pk_test_51KE6eZSHrbZyKrewrVumF0JWO4ZfaPs8R5ftijQjtxv3gZSJUmH8eNQZlgeiDL3FiqSc1CyA9b3OBDEr0ah2Vd26009rBvszmC'
+STRIPE_PUBLISH_AMOUNT = 5000
+
+LOGIN_REDIRECT_URL = 'landing'
 try:
     from .local_settings import *
 except:

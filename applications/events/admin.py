@@ -3,7 +3,7 @@ from .models import Events
 
 # Register your models here.
 class EventAdmin(admin.ModelAdmin):
-    list_display = ['__str__', 'title', 'created', 'location','start_date','end_date','is_published']
+    list_display = ['__str__', 'title','user_obj', 'created', 'location','start_date','end_date','is_published']
     # inlines=[OpportunityWinInline,TimeStampInlie,]
     search_fields = (
         'title',

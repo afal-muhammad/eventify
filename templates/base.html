@@ -23,14 +23,14 @@
     <link rel="stylesheet" href="{% static 'css/style.css' %}">
 </head>
 <body>
-
+<div id="load"></div>
 <div class="nav-menu sticky-top">
     <div class="bg transition">
         <div class="container-fluid fixed">
             <div class="row">
                 <div class="col-md-12">
                     <nav class="navbar navbar-expand-lg">
-                        <a class="navbar-brand" href="{% url 'landing' %}"><img src="{% static 'images/logo.png' %}" alt="logo"></a>
+                        <a class="navbar-brand" href="{% url 'landing' %}"><img src="{% static 'images/logo_3.png' %}" alt="logo"></a>
                         <button class="navbar-toggler" type="button" data-toggle="collapse"
                                 data-target="#navbarNavDropdown" aria-controls="navbarNavDropdown" aria-expanded="false"
                                 aria-label="Toggle navigation">
@@ -38,13 +38,13 @@
                         </button>
                         <div class="collapse navbar-collapse justify-content-end" id="navbarNavDropdown">
                             <ul class="navbar-nav">
-                                {% if request.user.is_authenticated %}
-                                {% if not 'events' in request.path %}
-                                <li class="nav-item">
-                                    <a class="nav-link" href="{% url 'my-events' %}">My Events</a>
-                                </li>
-                                {% endif %}
-                                {% endif %}
+<!--                                {% if request.user.is_authenticated %}-->
+<!--                                {% if not 'events' in request.path %}-->
+<!--                                <li class="nav-item">-->
+<!--                                    <a class="nav-link" href="{% url 'my-events' %}">My Events</a>-->
+<!--                                </li>-->
+<!--                                {% endif %}-->
+<!--                                {% endif %}-->
 <!--                                <li class="nav-item dropdown">-->
 <!--                                    <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"-->
 <!--                                       aria-expanded="false">-->
@@ -56,7 +56,7 @@
 <!--                                        <a class="dropdown-item" href="listing.html">Listing</a>-->
 <!--                                        <a class="dropdown-item" href="detail.html">Listing Detail</a>-->
 <!--                                        <a class="dropdown-item" href="add-listing.html">Add new Listing</a>-->
-<!--                                        <a class="dropdown-item" href="payment-method.html">Payment Method</a>-->
+<!--                                        <a class="dropdown-item" href="payment.html">Payment Method</a>-->
 <!--                                        <a class="dropdown-item" href="thank-you.html">Thank You</a>-->
 <!--                                        <a class="dropdown-item" href="contact.html">Contact</a>-->
 <!--                                        <a class="dropdown-item" href="pricing.html">Pricing</a>-->
@@ -83,15 +83,20 @@
                                    <li class="nav-item dropdown">
                                     <a class="nav-link" href="#" data-toggle="dropdown" aria-haspopup="true"
                                        aria-expanded="false">
-                                        {{request.user.first_name}}
+                                    {{request.user.first_name}}
+                                        <img style="border-radius: 50%; max-height:30px" src="{{request.user.get_image}}">
                                         <span class="ti-angle-down"></span>
                                     </a>
                                     <div class="dropdown-menu">
-                                        <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+                                    <a class="dropdown-item" href="{% url 'my-events' %}">My Events</a>
+                                    <a class="dropdown-item" href="{% url 'logout' %}">Logout</a>
+
                                     </div>
                                 </li>
                                     {% else %}
+                                    {% if not "/login" in request.path %}
                                     <a class="nav-link" href="{% url 'login' %}">Login</a>
+                                    {% endif %}
                                     {% endif %}
                                 </li>
 <!--                                {% if request.user.is_authenticated %}-->
@@ -121,7 +126,7 @@
             </div>
             <div class="col-md-4 responsive-wrap">
                 <div class="footer-logo_wrap">
-                    <img src="{% static 'images/footer-logo.png' %}" alt="#" class="img-fluid">
+                    <img src="{% static 'images/eventify.png' %}" alt="#" class="img-fluid">
                 </div>
             </div>
             <div class="col-md-4 responsive-wrap">
@@ -149,5 +154,15 @@
 
 <script src="{% static 'js/popper.min.js' %}"></script>
 <script src="{% static 'js/bootstrap.min.js' %}"></script>
+<script>
+     var $loading = $('#load').hide();
+$(document)
+  .ajaxStart(function () {
+    $loading.show();
+  })
+  .ajaxStop(function () {
+    $loading.hide();
+  });
+</script>
 </body>
 </html>
