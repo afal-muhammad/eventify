@@ -1,13 +1,15 @@
 import datetime
 import json
 import stripe
+from applications.events.models import Events
 from decimal import Decimal
 from django.conf import settings
 from django.contrib.auth.decorators import login_required
+from django.contrib.sites.shortcuts import get_current_site
+
 from django.http import HttpResponse
 from django.shortcuts import render, redirect, reverse
 from django.utils.decorators import method_decorator
-from applications.events.models import Events
 from django.views import View
 
 # Create your views here.
@@ -28,6 +30,8 @@ class PublishEventView(View):
         #                                                     'amount':Decimal(amount * 0.01).quantize(Decimal('1.00'))})
         # try:
         event = Events.objects.get(slug=kwargs["slug"])
+        current_site = get_current_site(self.request)
+
         session = stripe.checkout.Session.create(
             line_items=[{
                 'price_data': {
@@ -40,8 +44,8 @@ class PublishEventView(View):
                 'quantity': 1,
             }],
             mode='payment',
-            success_url='http://127.0.0.1:8000/success?flag=True&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
-            cancel_url='http://127.0.0.1:8000/success?flag=False&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
+            success_url=str(current_site.domain) + '/success?flag=True&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
+            cancel_url=str(current_site.domain) + '/success?flag=False&session_id={CHECKOUT_SESSION_ID}&event=' + event.slug,
 
         )
         return redirect(session.url)
