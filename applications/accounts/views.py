@@ -74,7 +74,7 @@ class SignUpView(View):
                 user.save()
                 data = {}
                 data['result'] = "success"
-                login(self.request,user, backend='applications.accounts.backends.EmailModelBackend')
+                # login(self.request,user, backend='applications.accounts.backends.EmailModelBackend')
                 return HttpResponse(json.dumps(data),
                                     content_type="application/json")
             else:

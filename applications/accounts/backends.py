@@ -12,6 +12,7 @@ class EmailModelBackend(ModelBackend):
 
         print(kwargs)
         if '@' in username:
+            username = username.lower()
             kwargs = {'email': username}
         else:
             return None

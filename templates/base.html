@@ -94,7 +94,7 @@
                                     </div>
                                 </li>
                                     {% else %}
-                                    {% if not "/login" in request.path or not "/signup" in request.path%}
+                                    {% if not "/login" in request.path and not "/signup" in request.path%}
                                     <a class="nav-link" href="{% url 'login' %}">Login</a>
                                     {% endif %}
                                     {% endif %}

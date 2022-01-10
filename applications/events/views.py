@@ -145,6 +145,7 @@ class CreateEventView(View):
                                 content_type="application/json")
 
 class PaymentSuccessView(View):
+    @method_decorator(login_required)
     def get(self, request):
         session = stripe.checkout.Session.retrieve(request.GET.get('session_id'))
         if request.GET.get('flag') == "True":
@@ -154,6 +155,7 @@ class PaymentSuccessView(View):
         return render(self.request, 'payment-success.html')
 
 class EventDetailView(View):
+    @method_decorator(login_required)
     def get(self, request, **kwargs):
         slug = kwargs["slug"]
         event = Events.objects.get(slug=slug)
