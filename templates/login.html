@@ -8,6 +8,7 @@
                 <div class="listing-wrap">
                     <form id="login_form">
                         {% csrf_token %}
+                        <input type="hidden" name="next" value="{{ request.GET.next }}">
                         <div class="form-group">
                             <lSabel for="username" class="required">Email/Username</lSabel>
                             <input type="text" class="form-control" id="username"
@@ -54,6 +55,10 @@
                 {
                  response = data.result;
                  $('.error').html(response);
+               }
+
+               else if (data.next){
+               window.location.href = data.next;
                }
                else{
                window.location.href = '{% url 'landing' %}';

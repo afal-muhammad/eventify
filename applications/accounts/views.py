@@ -23,6 +23,7 @@ class LoginView(View):
     def post(self,request):
         username = request.POST['username']
         password = request.POST['password']
+        next_url = request.POST.get('next')
         if username and password:
             user = authenticate(username=username, password=password)
         else:
@@ -32,6 +33,8 @@ class LoginView(View):
         if user:
             login(self.request, user)
             data = {}
+            if next_url:
+                data['next'] = next_url
             data['result'] = "success"
             return HttpResponse(json.dumps(data),content_type="application/json")
         else:
