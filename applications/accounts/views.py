@@ -4,6 +4,7 @@ import os
 from django.contrib.auth import authenticate, login
 from django.contrib.auth import logout
 from django.core.exceptions import ValidationError
+from django.core.paginator import Paginator
 from django.core.validators import validate_email
 from django.contrib.auth.decorators import login_required
 from django.http import HttpResponse,JsonResponse
@@ -95,16 +96,10 @@ class LogoutView(View):
         return redirect('/accounts/login')
 
 
-class LandingView(View):
-
-    def get(self, *args, **kwargs):
-        events = Events.objects.filter(is_published=True, start_date__gt=datetime.datetime.now()).order_by('start_date')
-        return render(self.request, 'landing.html',{"events":events})
-
-
 class MyEventsView(View):
 
     @method_decorator(login_required)
     def get(self, *args, **kwargs):
+        now = datetime.datetime.now()
         events = Events.objects.filter(user_obj=self.request.user).order_by("start_date")
-        return render(self.request, 'event-listing.html', {"events": events})
+        return render(self.request, 'event-listing.html', {"events": events, 'now': now})

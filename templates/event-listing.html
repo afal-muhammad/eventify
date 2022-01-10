@@ -1,7 +1,6 @@
 {% extends 'base.html' %}
 {% load static %}
 {% block content %}
-
 <section class="subpage-bg" xmlns="http://www.w3.org/1999/html">
     <div class="container-fluid">
         <div class="row justify-content-center">
@@ -44,15 +43,39 @@
                             {%endifnotequal%}
                         </p>
                     </div>
+                    </a>
+
                     <div class="card-bottom">
                         <p><i class="ti-location-pin"></i>{{event.location}}</p>
                         {% if event.is_published %}
-                        <span class="open-close_green">Published</span>
+                        <span class="open-close_green">
+                            {% if event.end_date.date == now.date and event.start_date.date <= now.date %}
+                                {% if event.start_date.time < now.time and event.end_date.time > now.time %}
+                                On Going
+                                {% else %}
+                                {% if event.end_date.time < now.time  %}
+                                Past Event
+                                {% endif %}
+                                {% endif %}
+                            {% else %}
+                                {% if event.end_date.date > now.date and event.start_date.date <= now.date %}
+                                On Going
+                                {% else %}
+                                {% if event.end_date.date >= now.date %}
+                                Published
+                                {% else %}
+                                {% if event.end_date.date <= now.date and event.end_date.time < now.time  %}
+                                Past Event
+                                {% endif %}
+                                {% endif %}
+                                {% endif %}
+                            {% endif %}
+                        </span>
                         {% else %}
                         <span><a href="{% url 'publish-event' event.slug %}">Publish</a></span>
                         {% endif %}
                     </div>
-                    </a>
+<!--                    </a>-->
                 </div>
             </div>
             {% endfor %}

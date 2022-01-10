@@ -10,5 +10,4 @@ urlpatterns = [
     path('login/', views.LoginView.as_view(), name="login"),
     path('logout/', views.LogoutView.as_view(), name="logout"),
     path('my-events/', views.MyEventsView.as_view(), name="my-events"),
-    path('', views.LandingView.as_view(), name="landing")
     ]
