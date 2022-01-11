@@ -406,12 +406,7 @@ footer.main-block {
 .btn-search .btn-simple:focus {
     color: #fff
 }
-/*
-.home-bg {
-    background: url(../images/home-bg1.jpg) no-repeat fixed;
-    background-size: cover
-}
-*/
+
 
 .home-bg .hero-title h1 {
     color: #fff
@@ -700,18 +695,6 @@ footer.main-block {
     line-height: 1.8;
     display: inline-block
 }
-/*
-.howit-bg {
-    background: url(../images/howit-bg.png) no-repeat top center;
-    background-size: contain;
-    position: relative;
-    top: 100px;
-    left: 0;
-    right: 0;
-    width: 100%;
-    height: 100px
-}
-*/
 
 @media(max-width:768px) {
     .howit-bg {
