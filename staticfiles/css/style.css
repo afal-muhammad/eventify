@@ -406,11 +406,12 @@ footer.main-block {
 .btn-search .btn-simple:focus {
     color: #fff
 }
-
+/*
 .home-bg {
     background: url(../images/home-bg1.jpg) no-repeat fixed;
     background-size: cover
 }
+*/
 
 .home-bg .hero-title h1 {
     color: #fff
@@ -699,7 +700,7 @@ footer.main-block {
     line-height: 1.8;
     display: inline-block
 }
-
+/*
 .howit-bg {
     background: url(../images/howit-bg.png) no-repeat top center;
     background-size: contain;
@@ -710,6 +711,7 @@ footer.main-block {
     width: 100%;
     height: 100px
 }
+*/
 
 @media(max-width:768px) {
     .howit-bg {
@@ -2607,7 +2609,7 @@ color:red;
     height:100%;
     position:fixed;
     z-index:9999;
-    background:url("/staticfiles/images/loading.gif.gif") no-repeat center center #ffffff99
+    background:url("/staticfiles/images/loading.gif") no-repeat center center #ffffff99
 }
 
 .profile-image{
