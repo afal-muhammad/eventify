@@ -106,3 +106,14 @@ class MyEventsView(View):
         now = datetime.datetime.now()
         events = Events.objects.filter(user_obj=self.request.user).order_by("start_date")
         return render(self.request, 'event-listing.html', {"events": events, 'now': now})
+
+
+def handler404(request, *args, **argv):
+    response = render(request, '404.html')
+    return response
+
+
+def handler500(request, *args, **argv):
+    response = render(request, '500.html')
+    response.status_code = 500
+    return response
