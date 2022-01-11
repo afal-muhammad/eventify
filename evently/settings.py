@@ -29,7 +29,7 @@ SECRET_KEY = 'django-insecure-+agkry!5r(emmtzvi5t7u=@gxk_rnnf+!cpo!p%u2quz3(-@q*
 # SECURITY WARNING: don't run with debug turned on in production!
 DEBUG = True
 
-ALLOWED_HOSTS = ['127.0.0.1']
+ALLOWED_HOSTS = ['127.0.0.1', 'https://eventi-fy.herokuapp.com']
 
 AUTH_USER_MODEL = 'accounts.User'
 
